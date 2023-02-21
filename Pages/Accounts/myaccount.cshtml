@@ -1,0 +1,14 @@
+﻿@page
+@model TECsite.Pages.Accounts.myaccountModel
+@{
+    ViewData["Title"] = "My Account page";
+}
+<div class="col-sm-4">
+    <div class="container">
+        <h3>Hello @Model.uname!</h3>
+        <p><b>Username: </b>@Model.uname</p>
+        <p><b>Discord Username: </b>@Model.userData[0]</p>
+        <p><b>Email: </b>@Model.userData[1]</p>
+        <p><a asp-area="" asp-page="/accounts/edit"><button class="link-button-class" id="link-button">Edit Details</button></a></p>
+    </div>
+  </div>
