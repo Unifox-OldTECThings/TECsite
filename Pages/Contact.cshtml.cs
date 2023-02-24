@@ -26,7 +26,7 @@ namespace TECsite.Pages
 
             Console.WriteLine("setting to dict");
             Dictionary<string, string> nameadressdict = new Dictionary<string, string>();
-            nameadressdict.Add("TheEnergeticConvention", "theenergeticconvention@gmail.com");
+            nameadressdict.Add("TheEnergeticConvention", "staff@thenergeticon.com");
             Console.WriteLine("Making Message");
             var message = new Message("WebsiteUser", email, nameadressdict, "Message from website", $"From: {email}\n{usermessage}", null);
             Console.WriteLine("Sending Message");
