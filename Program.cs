@@ -30,6 +30,8 @@ namespace TECsite {
         /// </summary>
         public static DateTime mainNow = DateTime.Now;
 
+        public static TimeSpan fiveMin = mainNow.AddMinutes(5) - mainNow;
+
         /// <summary>
         /// Used to get a DateTime from a string
         /// </summary>

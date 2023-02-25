@@ -11,35 +11,124 @@
     <h2 id="current">Current Event:</h2>
         <a asp-area="" asp-page="/Events/CurrentEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Join the current event now!</button></a>
     <h2 id="upcoming">Upcoming Events:</h2>
-        <p>The convention is now over. Thank you to those who attended. The schedule will likely be similar for next time. We will hopefully have some more events outside of VRChat, and have multiple events running at the same time.</p>
+    @if (!(Program.mainNow > Program.GetEventTime(Program.Event4Time))){
+        <h3 id="fri">Friday, Mar. 31:</h3>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event1Time)){
+    <p id="1">QA 4pm - 5pm: <a asp-area="" asp-page="/Events/Event1"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Opening of the convention!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event2Time)){
+    <p id="2">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event3Time)){
+    <p id="3">   6pm - 7pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event4Time)){
+    <p id="4">NQ 7pm - 8pm: <a asp-area="" asp-page="/Events/Event3"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Furry Games!</button></a></p>
+    } @if (!(Program.mainNow > Program.GetEventTime(Program.Event17Time))){
+    <h3 id="sat">Saturday, Apr. 1:</h3>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event5Time)){
+    <p id="5">   8am - 9am: <a asp-area="" asp-page="/Events/Event4"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Minecraft mini games! In minecraft *</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event6Time)){
+    <p id="6">NQ 9am - 11am: <a asp-area="" asp-page="/Events/Event5"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tycoon Fun!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event7Time)){
+    <p id="7">QA 11am - 12pm: <a asp-area="" asp-page="/Events/Event6"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tag!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event8Time)){
+    <p id="8">   12pm - 12:30pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event9Time)){
+    <p id="9">   12:30pm - 1pm: <a asp-area="" asp-page="/Events/Event14"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Fursuit Meet & Greet! *</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event10Time)){
+    <p id="10">NQ 1pm - 2pm: <a asp-area="" asp-page="/Events/Event7"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Minesweeper!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event11Time)){
+    <p id="11">QA 2pm - 3pm: <a asp-area="" asp-page="/Events/Event8"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Among Us!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event12Time)){
+    <p id="12">QA 3pm - 4pm: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event13Time)){
+    <p id="13">   4pm - 5pm: <a asp-area="" asp-page="/Events/Event9"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Beat Saber Battles! In Beat Saber *</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event14Time)){
+    <p id="14">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event10"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Cards Against Humanity!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event15Time)){
+    <p id="15">   6pm - 7pm: <a asp-area="" asp-page="/Events/Event15"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Jackbox Games! *</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event16Time)){
+    <p id="16">QA 7pm - 8pm: <a asp-area="" asp-page="/Events/Event11"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Flight and Fight!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event17Time)){
+    <p id="17">   8pm - 9pm: <a asp-area="" asp-page="/Events/Event16"><button class="link-button-class" id="link-button" onclick="ButtonWait()">DJ stream! * <b>CANCELLED</b></button></a></p>
+    } @if (!(Program.mainNow > Program.GetEventTime(Program.Event26Time))){
+    <h3 id="sun">Sunday, Apr. 2:</h3>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event18Time)){
+    <p id="18">   8am - 9am: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event19Time)){
+    <p id="19">QA 9am - 10am: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event20Time)){
+    <p id="20">QA 10am - 11am: <a asp-area="" asp-page="/Events/Event6"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tag!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event21Time)){
+    <p id="21">QA 11am - 12pm: <a asp-area="" asp-page="/Events/Event10"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Cards Against Humanity!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event22Time)){
+    <p id="22">   12pm - 1pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event23Time)){
+    <p id="23">NQ 1pm - 3pm: <a asp-area="" asp-page="/Events/Event5"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tycoon Fun!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event24Time)){
+    <p id="24">QA 3pm - 4pm: <a asp-area="" asp-page="/Events/Event12"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Putt Putt Quest!</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event25Time)){
+    <p id="25">   4pm - 5pm: <a asp-area="" asp-page="/Events/Event9"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Beat Saber Battles! In Beat Saber *</button></a></p>
+    } @if (Program.mainNow < Program.GetEventTime(Program.Event26Time)){
+    <p id="26">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event13"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Closing of the Convention.</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event26Time)){
+    <p>The convention is now over. Thank you to those who attended. The schedule will likely be similar for next time. We will hopefully have some more events outside of VRChat, and have multiple events running at the same time.</p>
+    }
+
+    @if (Program.mainNow > Program.GetEventTime(Program.Event1Time)){
     <h2 id="past">Past Events:</h2>
         <h3 id="fri">Friday, Mar. 31:</h3>
-            <p id="1">QA 4pm - 5pm: <a asp-area="" asp-page="/Events/Event1"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Opening of the convention!</button></a></p>
-            <p id="2">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
-            <p id="3">   6pm - 7pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
-            <p id="4">NQ 7pm - 8pm: <a asp-area="" asp-page="/Events/Event3"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Furry Games!</button></a></p>
-        <h3 id="sat">Saturday, Apr. 1:</h3>
-            <p id="5">   8am - 9am: <a asp-area="" asp-page="/Events/Event4"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Minecraft mini games! In minecraft *</button></a></p>
-            <p id="6">NQ 9am - 11am: <a asp-area="" asp-page="/Events/Event5"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tycoon Fun!</button></a></p>
-            <p id="7">QA 11am - 12pm: <a asp-area="" asp-page="/Events/Event6"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tag!</button></a></p>
-            <p id="8">   12pm - 12:30pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
-            <p id="9">   12:30pm - 1pm: <a asp-area="" asp-page="/Events/Event14"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Fursuit Meet & Greet! *</button></a></p>
-            <p id="10">NQ 1pm - 2pm: <a asp-area="" asp-page="/Events/Event7"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Minesweeper!</button></a></p>
-            <p id="11">QA 2pm - 3pm: <a asp-area="" asp-page="/Events/Event8"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Among Us!</button></a></p>
-            <p id="12">QA 3pm - 4pm: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
-            <p id="13">   4pm - 5pm: <a asp-area="" asp-page="/Events/Event9"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Beat Saber Battles! In Beat Saber *</button></a></p>
-            <p id="14">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event10"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Cards Against Humanity!</button></a></p>
-            <p id="15">   6pm - 7pm: <a asp-area="" asp-page="/Events/Event15"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Jackbox Games! *</button></a></p>
-            <p id="16">QA 7pm - 8pm: <a asp-area="" asp-page="/Events/Event11"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Flight and Fight!</button></a></p>
-            <p id="17">   8pm - 9pm: <a asp-area="" asp-page="/Events/Event16"><button class="link-button-class" id="link-button" onclick="ButtonWait()">DJ stream! * <b>CANCELLED</b></button></a></p>
-        <h3 id="sun">Sunday, Apr. 2:</h3>
-            <p id="18">   8am - 9am: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
-            <p id="19">QA 9am - 10am: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
-            <p id="20">QA 10am - 11am: <a asp-area="" asp-page="/Events/Event6"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tag!</button></a></p>
-            <p id="21">QA 11am - 12pm: <a asp-area="" asp-page="/Events/Event10"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Cards Against Humanity!</button></a></p>
-            <p id="22">   12pm - 1pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
-            <p id="23">NQ 1pm - 3pm: <a asp-area="" asp-page="/Events/Event5"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tycoon Fun!</button></a></p>
-            <p id="24">QA 3pm - 4pm: <a asp-area="" asp-page="/Events/Event12"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Putt Putt Quest!</button></a></p>
-            <p id="25">   4pm - 5pm: <a asp-area="" asp-page="/Events/Event9"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Beat Saber Battles! In Beat Saber *</button></a></p>
-            <p id="26">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event13"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Closing of the Convention.</button></a></p>
+    <p id="1">QA 4pm - 5pm: <a asp-area="" asp-page="/Events/Event1"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Opening of the convention!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event2Time)){
+    <p id="2">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event3Time)){
+    <p id="3">   6pm - 7pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event4Time)){
+    <p id="4">NQ 7pm - 8pm: <a asp-area="" asp-page="/Events/Event3"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Furry Games!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event5Time)){
+    <h3 id="sat">Saturday, Apr. 1:</h3>
+    <p id="5">   8am - 9am: <a asp-area="" asp-page="/Events/Event4"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Minecraft mini games! In minecraft *</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event6Time)){
+    <p id="6">NQ 9am - 11am: <a asp-area="" asp-page="/Events/Event5"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tycoon Fun!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event7Time)){
+    <p id="7">QA 11am - 12pm: <a asp-area="" asp-page="/Events/Event6"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tag!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event8Time)){
+    <p id="8">   12pm - 12:30pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event9Time)){
+    <p id="9">   12:30pm - 1pm: <a asp-area="" asp-page="/Events/Event14"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Fursuit Meet & Greet! *</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event10Time)){
+    <p id="10">NQ 1pm - 2pm: <a asp-area="" asp-page="/Events/Event7"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Minesweeper!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event11Time)){
+    <p id="11">QA 2pm - 3pm: <a asp-area="" asp-page="/Events/Event8"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Among Us!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event12Time)){
+    <p id="12">QA 3pm - 4pm: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event13Time)){
+    <p id="13">   4pm - 5pm: <a asp-area="" asp-page="/Events/Event9"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Beat Saber Battles! In Beat Saber *</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event14Time)){
+    <p id="14">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event10"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Cards Against Humanity!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event15Time)){
+    <p id="15">   6pm - 7pm: <a asp-area="" asp-page="/Events/Event15"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Jackbox Games! *</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event16Time)){
+    <p id="16">QA 7pm - 8pm: <a asp-area="" asp-page="/Events/Event11"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Flight and Fight!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event17Time)){
+    <p id="17">   8pm - 9pm: <a asp-area="" asp-page="/Events/Event16"><button class="link-button-class" id="link-button" onclick="ButtonWait()">DJ stream! * <b>CANCELLED</b></button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event18Time)){
+    <h3 id="sun">Sunday, Apr. 2:</h3>
+    <p id="18">   8am - 9am: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event19Time)){
+    <p id="19">QA 9am - 10am: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event20Time)){
+    <p id="20">QA 10am - 11am: <a asp-area="" asp-page="/Events/Event6"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tag!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event21Time)){
+    <p id="21">QA 11am - 12pm: <a asp-area="" asp-page="/Events/Event10"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Cards Against Humanity!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event22Time)){
+    <p id="22">   12pm - 1pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event23Time)){
+    <p id="23">NQ 1pm - 3pm: <a asp-area="" asp-page="/Events/Event5"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tycoon Fun!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event24Time)){
+    <p id="24">QA 3pm - 4pm: <a asp-area="" asp-page="/Events/Event12"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Putt Putt Quest!</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event25Time)){
+    <p id="25">   4pm - 5pm: <a asp-area="" asp-page="/Events/Event9"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Beat Saber Battles! In Beat Saber *</button></a></p>
+    } @if (Program.mainNow > Program.GetEventTime(Program.Event26Time)){
+    <p id="26">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event13"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Closing of the Convention.</button></a></p>
+    }
+
 </div>

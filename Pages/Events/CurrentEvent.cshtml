@@ -7,7 +7,7 @@
 
 <div class="text-center">
     <h1 class="display-4">The Current Event</h1>
-    @if (Program.mainNow < Program.GetEventTime(Program.Event1Time)){ 
+    @if (Program.mainNow < Program.GetEventTime(Program.Event1Time).Subtract(Program.fiveMin)){ 
         nextEvent = Program.reformatDate(Program.Event1Time);
     <p id="before">The convention has not started yet... check back here when it has!</p>
     }
