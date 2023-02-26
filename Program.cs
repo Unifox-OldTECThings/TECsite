@@ -30,6 +30,8 @@ namespace TECsite {
         /// </summary>
         public static DateTime mainNow = DateTime.Now;
 
+        public static TimeSpan fiveMin = mainNow.AddMinutes(5) - mainNow;
+
         /// <summary>
         /// Used to get a DateTime from a string
         /// </summary>
@@ -184,15 +186,15 @@ namespace TECsite {
             }
 
             //in case we need to check email service is working
-            /*
+            
             EmailSender _emailSender = new EmailSender();
             Console.WriteLine("sending startup email for test");
             Dictionary<string, string> nameadressdict = new Dictionary<string, string>();
             nameadressdict.Add("Unifox", "awsomejojop@gmail.com");
-            var message = new Message("The Energetic Convention", "theenergeticconvention@gmail.com", nameadressdict, "Startup", "<html><style>a {color: rgb(255, 210, 8)} a:hover {color: rgb(220, 180, 0)} body {margin-bottom: 30px; background-repeat: no-repeat; background-size: cover; background-position-y: 25 %;background-color: rgba(33, 37, 41, 1); opacity: 1; width: 99 %; height: 90 %;} p {color: rgb(255, 255, 255)}</style><body>test text <a href='https://discord.gg/rGBn2uW'>test link</a></body><html>", null);
+            var message = new Message("The Energetic Convention", "theenergeticconvention@gmail.com", nameadressdict, "Startup", "<html><style>a {color: rgb(255, 210, 8)} a:hover {color: rgb(220, 180, 0)} body {margin-bottom: 30px; background-repeat: no-repeat; background-size: cover; background-position-y: 25 %;background-color: rgba(33, 37, 41, 1); opacity: 1; width: 99 %; height: 90 %;} p {color: rgb(255, 255, 255)}</style><body>test text <a href='https://discord.gg/Rte9sbK76D'>test link</a></body><html>", null);
             _emailSender.SendEmail(message);
             Console.WriteLine("email sent");
-            */
+            
 
             //grab the routers IP and the last known router IP for later
             string strRIP = await new HttpClient().GetStringAsync("https://ipinfo.io/ip");
