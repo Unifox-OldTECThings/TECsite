@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +15,14 @@ using TECsite.Models;
 
 namespace TECsite.Models
 {
-    public class User
+    public class EventsInfo
     {
-        public string UserName { get; set; }
-        public string DiscordUser { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public string Password { get; set; }
-        public string UserRole { get; set; }
-
+        public string EventName { get; set; }
+        public string EventId { get; set; }
+        public string EventType { get; set; }
+        public int EventNumber { get; set; }
+        public string EventDescription { get; set; }
+        public string EventCategory { get; set; }
+        public string[] UserPings { get; set; }
     }
 }
