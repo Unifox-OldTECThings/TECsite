@@ -41,6 +41,7 @@ namespace TECsite.Pages.Accounts
         {
             string encryptedpsw = psw.Encrypt();
             uname = Request.Cookies["loggedIn"];
+            userData = Program.siteData.Users.Find(uname);
             if (Program.siteData.Users.Find(newuname) != null)
             {
                 rResponse = "Error: Username already exists!";
@@ -62,38 +63,48 @@ namespace TECsite.Pages.Accounts
                 {
                     User changedUser = Program.siteData.Users.Find(uname);
 
-                    if (newdisuname != null)
-                    {
-                        changedUser.DiscordUser = newdisuname;
-                    }
-                    if (newemail != null)
-                    {
-                        changedUser.Email = newemail;
-                    }
                     if (newuname != null)
                     {
-                        changedUser.UserName = newuname;
-                    }
+                        Program.siteData.Users.Remove(changedUser);
+                        Program.siteData.SaveChanges();
+                        
+                        User newchangedUser = new(newuname, (newdisuname ?? changedUser.DiscordUser), (newemail ?? changedUser.Email), changedUser.Password, changedUser.EmailConfirmed, changedUser.UserRole);
+                        if (newemail != null)
+                        {
+                            newchangedUser.EmailConfirmed = false;
+                            //send email verification
+                        }
+                        Program.siteData.Add<User>(newchangedUser);
+                        Program.siteData.SaveChanges();
 
+                        CookieOptions cookieOptions = new();
+                        if (remember)
+                        {
+                            cookieOptions.Expires = DateTime.UtcNow.AddMonths(6);
+                        }
 
-                    Program.siteData.EditUser(changedUser);
-
-                    rResponse = "Success!";
-                    CookieOptions cookieOptions = new();
-                    if (remember)
-                    {
-                        cookieOptions.Expires = DateTime.MaxValue;
-                    }
-                    Response.Cookies.Delete("loggedIn");
-                    if (newuname != null)
-                    {
+                        Response.Cookies.Delete("loggedIn");
                         Response.Cookies.Append("loggedIn", newuname, cookieOptions);
                     }
                     else
                     {
-                        Response.Cookies.Append("loggedIn", uname, cookieOptions);
+                        if (newdisuname != null)
+                        {
+                            changedUser.DiscordUser = newdisuname;
+                        }
+                        if (newemail != null)
+                        {
+                            changedUser.Email = newemail;
+                            changedUser.EmailConfirmed = false;
+                            //send email verification
+                        }
+
+                        Program.siteData.Update<User>(changedUser);
+                        Program.siteData.SaveChanges();
                     }
-                    Response.Cookies.Append("loggedIn", uname, cookieOptions);
+
+                    rResponse = "Success!";
+
                     Console.WriteLine("Edited Account");
                     return RedirectToPage("../Index");
                 }

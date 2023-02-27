@@ -35,7 +35,7 @@ namespace TECsite
 
             services.AddHttpContextAccessor();
 
-            services.AddDbContext<DataContext>();
+            services.AddDbContext<TECsiteData>();
 
             services.AddSession(options =>
             {

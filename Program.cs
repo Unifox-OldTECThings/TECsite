@@ -25,7 +25,7 @@ namespace TECsite {
 
     public class Program {
 
-        public static TECsiteData siteData = new();
+        public static TECsiteData siteData = new TECsiteData();
 
         /// <summary>
         /// main timekeep variable
@@ -133,10 +133,10 @@ namespace TECsite {
         /// <param name="myIP">The local IP address to listen on</param>
         /// <param name="root">The root directory of the app</param>
         /// <returns>A configured <see cref="IWebHostBuilder"/></returns>
-        public static IWebHostBuilder CreateHostBuilder(string[] args, string myIP, string root)
+        public static IHostBuilder CreateHostBuilder(string[] args, string myIP, string root)
         {
             //the web host builder to be returned
-            var host = new WebHostBuilder()
+            var host = new HostBuilder()
                 //configure some logging to see whats going on inside, could be commented out later ig
                 .ConfigureLogging((hostingContext, logging) =>
                 {
@@ -145,16 +145,19 @@ namespace TECsite {
                     logging.AddEventLog();
                     logging.SetMinimumLevel(LogLevel.Trace); //write EVERYTHING, im trying to get stuff figured out
                 })
-                .UseKestrel() //Use kestrel to run on ig
-                .UseContentRoot(root) //set the content root
+                .ConfigureWebHost(webHostBuilder =>
+                {
+                    webHostBuilder.UseKestrel()
 #if DEBUG
-                .UseUrls("https://localhost:443", "http://localhost:80") //set the addresses to listen on from provided IP
+                    .UseUrls("https://localhost:443", "http://localhost:80") //set the addresses to listen on from provided IP
 #else
-                .UseUrls("https://" + myIP + ":443", "http://" + myIP + ":80") //set the addresses to listen on from provided IP
+                    .UseUrls("https://" + myIP + ":443", "http://" + myIP + ":80") //set the addresses to listen on from provided IP
 #endif
-                //.UseIISIntegration() //IDK lol
-                .CaptureStartupErrors(true) //Capture the startup errors if something happens ig
-                .UseStartup<Startup>(); //required ig, use the startup for stuff
+                    .CaptureStartupErrors(true) //Capture the startup errors if something happens ig
+                    //.UseIISIntegration() //IDK lol
+                    .UseStartup<Startup>(); //required ig, use the startup for stuff
+                })
+                .UseContentRoot(root); //set the content root
 
             //and return the host builder
             return host;
@@ -206,10 +209,6 @@ namespace TECsite {
             //try to run the site, do not await to allow code to continue running
             try
             {
-                foreach (var obj in app.ServerFeatures.ToArray())
-                {
-                    Debug.WriteLine(obj);
-                }
                 app.RunAsync();
             }
             catch (Exception ex)
@@ -277,10 +276,6 @@ namespace TECsite {
             //try to run the site, do not await to allow code to continue running
             try
             {
-                foreach (var obj in app.ServerFeatures.ToArray())
-                {
-                    Debug.WriteLine(obj);
-                }
                 app.RunAsync();
             }
             catch (Exception ex)

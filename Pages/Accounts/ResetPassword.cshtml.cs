@@ -11,23 +11,8 @@ namespace TECsite.Pages.Accounts
     public class ResetPasswordModel : PageModel
     {
         private static readonly HttpClient client = new HttpClient();
-        public string rResponse = String.Empty;
+        public string rResponse = string.Empty;
         public bool isCookie = false;
-
-        private void WaitUntil(DateTime dateTime)
-        {
-            while (true)
-            {
-                if (DateTime.Now >= dateTime)
-                {
-                    return;
-                }
-                else
-                {
-                    Thread.Sleep(1000);
-                }
-            }
-        }
 
         public void OnGet()
         {
@@ -57,13 +42,14 @@ namespace TECsite.Pages.Accounts
                 {
                     User changedUser = Program.siteData.Users.Find(uname);
                     changedUser.Password = encryptedpsw;
-                    Program.siteData.EditUser(changedUser);
+                    Program.siteData.Update<User>(changedUser);
+                    Program.siteData.SaveChanges();
 
                     rResponse = "Success!";
                     CookieOptions cookieOptions = new();
                     if (remember)
                     {
-                        cookieOptions.Expires = DateTime.MaxValue;
+                        cookieOptions.Expires = DateTime.UtcNow.AddMonths(6);
                     }
                     Response.Cookies.Delete("resetPsw");
                     Response.Cookies.Delete("loggedIn");

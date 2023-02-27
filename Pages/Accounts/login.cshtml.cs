@@ -34,7 +34,7 @@ namespace TECsite.Pages.Accounts
                 CookieOptions cookieOptions = new();
                 if (remember)
                 {
-                    cookieOptions.Expires = DateTime.MaxValue;
+                    cookieOptions.Expires = DateTime.UtcNow.AddMonths(6);
                 }
                 Response.Cookies.Append("loggedIn", uname, cookieOptions);
                 Console.WriteLine($"logged in {uname}");

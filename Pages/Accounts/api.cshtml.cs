@@ -11,9 +11,9 @@ namespace TECsite.Pages.Accounts
     {
         public string userinfo = String.Empty;
 
-        private readonly ILogger<PrivacyModel> _logger;
+        private readonly ILogger<apiModel> _logger;
 
-        public apiModel(ILogger<PrivacyModel> logger)
+        public apiModel(ILogger<apiModel> logger)
         {
             _logger = logger;
             Console.WriteLine("accounts api Page made");
@@ -22,12 +22,13 @@ namespace TECsite.Pages.Accounts
         public ActionResult OnGet()
         {
             Console.WriteLine("api accounts get");
-            DbSet<User> users = Program.siteData.Users;
+            DbSet<User> users =  Program.siteData.Users;
+            var enumusers = users.AsEnumerable();
             Dictionary<string, string[]> userinfo = new();
             for (int i = 0; i < users.Count(); i++)
             {
-                string[] userdata = { users.ElementAt(i).DiscordUser, users.ElementAt(i).UserRole };
-                userinfo.Add(users.ElementAt(i).UserName, userdata);
+                string[] userdata = { enumusers.ElementAt(i).DiscordUser, enumusers.ElementAt(i).UserRole };
+                userinfo.Add(enumusers.ElementAt(i).UserName, userdata);
             }
             string data = JsonConvert.SerializeObject(userinfo);
             Console.WriteLine("api accounts get done");

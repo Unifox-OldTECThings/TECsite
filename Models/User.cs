@@ -15,15 +15,17 @@ using TECsite.Models;
 
 namespace TECsite.Models
 {
+    [PrimaryKey("UserName")]
     public class User
     {
-        public User(string UName, string DisUser, string email, bool EmailConf, string Pass, string URole) {
-            UserName = UName;
-            DiscordUser = DisUser;
+        public User(string userName, string discordUser, string email, string password, bool emailConfirmed = false, string userRole = "User") 
+        {
+            UserName = userName;
+            DiscordUser = discordUser;
             Email = email;
-            EmailConfirmed = EmailConf;
-            Password = Pass;
-            UserRole = URole;
+            Password = password;
+            EmailConfirmed = emailConfirmed;
+            UserRole = userRole;
         }
 
         public string UserName { get; set; }
