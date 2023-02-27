@@ -7,8 +7,8 @@
     <div class="container">
         <h3>Hello @Model.uname!</h3>
         <p><b>Username: </b>@Model.uname</p>
-        <p><b>Discord Username: </b>@Model.userData[0]</p>
-        <p><b>Email: </b>@Model.userData[1]</p>
+        <p><b>Discord Username: </b>@Model.userData.DiscordUser</p>
+        <p><b>Email: </b>@Model.userData.Email</p>
         <p><a asp-area="" asp-page="/accounts/edit"><button class="link-button-class" id="link-button">Edit Details</button></a></p>
     </div>
   </div>

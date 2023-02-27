@@ -2,19 +2,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TECsite.Data;
 using UniEncryption;
+using TECsite.Models;
 
 namespace TECsite.Pages.Accounts
 {
     public class myaccountModel : PageModel
     {
         public string? uname = "";
-        public string[]? userData = new string[0];
+        public User? userData;
 
         public void OnGet()
         {
-            TECsiteData siteData = new();
             uname = Request.Cookies["loggedIn"];
-            userData = siteData.userInfo[uname];
+            userData = Program.siteData.Users.Find(uname);
             Console.WriteLine($"myaccount page for {uname}");
         }
     }

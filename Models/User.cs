@@ -17,6 +17,15 @@ namespace TECsite.Models
 {
     public class User
     {
+        public User(string UName, string DisUser, string email, bool EmailConf, string Pass, string URole) {
+            UserName = UName;
+            DiscordUser = DisUser;
+            Email = email;
+            EmailConfirmed = EmailConf;
+            Password = Pass;
+            UserRole = URole;
+        }
+
         public string UserName { get; set; }
         public string DiscordUser { get; set; }
         public string Email { get; set; }

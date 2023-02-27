@@ -25,6 +25,8 @@ namespace TECsite {
 
     public class Program {
 
+        public static TECsiteData siteData = new();
+
         /// <summary>
         /// main timekeep variable
         /// </summary>
@@ -145,7 +147,11 @@ namespace TECsite {
                 })
                 .UseKestrel() //Use kestrel to run on ig
                 .UseContentRoot(root) //set the content root
+#if DEBUG
+                .UseUrls("https://localhost:443", "http://localhost:80") //set the addresses to listen on from provided IP
+#else
                 .UseUrls("https://" + myIP + ":443", "http://" + myIP + ":80") //set the addresses to listen on from provided IP
+#endif
                 //.UseIISIntegration() //IDK lol
                 .CaptureStartupErrors(true) //Capture the startup errors if something happens ig
                 .UseStartup<Startup>(); //required ig, use the startup for stuff
@@ -186,7 +192,7 @@ namespace TECsite {
             }
 
             //in case we need to check email service is working
-            
+            /*
             EmailSender _emailSender = new EmailSender();
             Console.WriteLine("sending startup email for test");
             Dictionary<string, string> nameadressdict = new Dictionary<string, string>();
@@ -194,8 +200,41 @@ namespace TECsite {
             var message = new Message("The Energetic Convention", "theenergeticconvention@gmail.com", nameadressdict, "Startup", "<html><style>a {color: rgb(255, 210, 8)} a:hover {color: rgb(220, 180, 0)} body {margin-bottom: 30px; background-repeat: no-repeat; background-size: cover; background-position-y: 25 %;background-color: rgba(33, 37, 41, 1); opacity: 1; width: 99 %; height: 90 %;} p {color: rgb(255, 255, 255)}</style><body>test text <a href='https://discord.gg/Rte9sbK76D'>test link</a></body><html>", null);
             _emailSender.SendEmail(message);
             Console.WriteLine("email sent");
-            
+            */
 
+#if DEBUG
+            //try to run the site, do not await to allow code to continue running
+            try
+            {
+                foreach (var obj in app.ServerFeatures.ToArray())
+                {
+                    Debug.WriteLine(obj);
+                }
+                app.RunAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex); //catch any exceptions that happen possibly
+            }
+
+            int waitime = 0;
+            //and finally keep the current time updated every half second
+            while (true)
+            {
+                mainNow = DateTime.Now;
+                Console.WriteLine(mainNow.ToString());
+                if (waitime < 6) //wait 3 seconds before checking the time, to make sure it doesnt shut down upon startup
+                {
+                    waitime++;
+                }
+                else if (mainNow.ToLongTimeString() == "12:00:00 AM") //restart the site every midnight. use windows task scheduler to start a new instance while this on shuts down
+                {
+                    Console.WriteLine("shutoff");//Environment.Exit(0);
+                }
+                Thread.Sleep(500);
+            }
+
+#else
             //grab the routers IP and the last known router IP for later
             string strRIP = await new HttpClient().GetStringAsync("https://ipinfo.io/ip");
             Debug.WriteLine("Router IP:" + strRIP);
@@ -265,6 +304,7 @@ namespace TECsite {
                 }
                 Thread.Sleep(500);
             }
+#endif
         }
 
     }

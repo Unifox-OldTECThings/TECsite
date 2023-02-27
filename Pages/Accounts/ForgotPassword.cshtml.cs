@@ -18,18 +18,17 @@ namespace TECsite.Pages.Accounts
 
         public async Task<ActionResult> OnPostSendreset(string uname, string disuname, string email)
         {
-            TECsiteData siteData = new();
-            if (!siteData.userInfo.ContainsKey(uname))
+            if (Program.siteData.Users.Find(uname) == null)
             {
                 rResponse = "Error: Username not found!";
                 return null;
             }
-            else if (!siteData.userInfo[uname].Contains(disuname))
+            else if (Program.siteData.Users.Find(uname).DiscordUser != disuname)
             {
                 rResponse = "Error: Incorrect Discord Username!";
                 return null;
             }
-            else if (!siteData.userInfo[uname].Contains(email))
+            else if (Program.siteData.Users.Find(uname).Email != email)
             {
                 rResponse = "Error: Incorrect Email!";
                 return null;
