@@ -5,11 +5,11 @@ using System;
 
 namespace TECsite.Pages
 {
-    public class tecapiModel : PageModel
+    public class apiModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        private readonly ILogger<apiModel> _logger;
 
-        public tecapiModel(ILogger<PrivacyModel> logger)
+        public apiModel(ILogger<apiModel> logger)
         {
             _logger = logger;
         }

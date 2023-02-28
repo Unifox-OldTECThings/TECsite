@@ -5,15 +5,15 @@ using Newtonsoft.Json;
 using TECsite.Data;
 using TECsite.Models;
 
-namespace TECsite.Pages.Accounts
+namespace TECsite.Pages.api
 {
-    public class apiModel : PageModel
+    public class accountsModel : PageModel
     {
         public string userinfo = String.Empty;
 
-        private readonly ILogger<apiModel> _logger;
+        private readonly ILogger<accountsModel> _logger;
 
-        public apiModel(ILogger<apiModel> logger)
+        public accountsModel(ILogger<accountsModel> logger)
         {
             _logger = logger;
             Console.WriteLine("accounts api Page made");
