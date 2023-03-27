@@ -10,6 +10,7 @@ namespace TECsite.Data
 {
     public class TECsiteData : DbContext
     {
+
         public DbSet<User> Users { get; set; }
         public DbSet<EventsInfo> EventsInfo { get; set; }
 
@@ -17,6 +18,7 @@ namespace TECsite.Data
         {
             // connect to sqlite database
             optionsBuilder.UseSqlite("Data Source=.\\Data\\TECData.db");
+            optionsBuilder.UseApplicationServiceProvider(Program.services);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

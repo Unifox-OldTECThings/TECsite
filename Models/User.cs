@@ -28,12 +28,12 @@ namespace TECsite.Models
             UserRole = userRole;
         }
 
-        public string UserName { get; set; }
-        public string DiscordUser { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public string Password { get; set; }
-        public string UserRole { get; set; }
+        public static string UserName { get; set; }
+        public static string DiscordUser { get; set; }
+        public static string Email { get; set; }
+        public static bool EmailConfirmed { get; set; }
+        public static string Password { get; set; }
+        public static string UserRole { get; set; }
 
     }
 }

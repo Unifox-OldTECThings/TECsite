@@ -36,7 +36,11 @@ namespace TECsite
 
             services.AddHttpContextAccessor();
 
-            services.AddDbContext<TECsiteData>();
+            //services.AddDbContextFactory<TECsiteData>();
+            //services.AddDbContext<TECsiteData>();
+            string path = Directory.GetCurrentDirectory();
+            Program.connString = "Data Source=" + path + "\\Data\\TECdata.db;Pooling=True;Max Pool Size=100;";
+            services.AddSqlite<TECsiteData>(Program.connString);
 
             services.AddSession(options =>
             {

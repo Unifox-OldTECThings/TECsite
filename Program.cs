@@ -20,12 +20,15 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 using UniEncryption;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 
 namespace TECsite {
 
     public class Program {
 
-        public static TECsiteData siteData = new TECsiteData();
+        public static SqliteConnection sqliteConn;
+        public static string connString;
 
         /// <summary>
         /// main timekeep variable
@@ -147,12 +150,12 @@ namespace TECsite {
                 })
                 .ConfigureWebHost(webHostBuilder =>
                 {
-                    webHostBuilder.UseKestrel()
+                    webHostBuilder.UseKestrel()/*
 #if DEBUG
                     .UseUrls("https://localhost:443", "http://localhost:80") //set the addresses to listen on from provided IP
-#else
+#else*/
                     .UseUrls("https://" + myIP + ":443", "http://" + myIP + ":80") //set the addresses to listen on from provided IP
-#endif
+//#endif
                     .CaptureStartupErrors(true) //Capture the startup errors if something happens ig
                     //.UseIISIntegration() //IDK lol
                     .UseStartup<Startup>(); //required ig, use the startup for stuff
@@ -188,11 +191,11 @@ namespace TECsite {
             var builder = CreateHostBuilder(args, myIP, root);
             var app = builder.Build();
 
-            //not sure what this is needed for, but keeping just in case ig
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
             }
+            
 
             //in case we need to check email service is working
             /*
@@ -204,7 +207,7 @@ namespace TECsite {
             _emailSender.SendEmail(message);
             Console.WriteLine("email sent");
             */
-
+/*
 #if DEBUG
             //try to run the site, do not await to allow code to continue running
             try
@@ -233,7 +236,7 @@ namespace TECsite {
                 Thread.Sleep(500);
             }
 
-#else
+#else*/
             //grab the routers IP and the last known router IP for later
             string strRIP = await new HttpClient().GetStringAsync("https://ipinfo.io/ip");
             Debug.WriteLine("Router IP:" + strRIP);
@@ -276,6 +279,7 @@ namespace TECsite {
             //try to run the site, do not await to allow code to continue running
             try
             {
+                sqliteConn = new(connString);
                 app.RunAsync();
             }
             catch (Exception ex)
@@ -299,7 +303,7 @@ namespace TECsite {
                 }
                 Thread.Sleep(500);
             }
-#endif
+//#endif
         }
 
     }
