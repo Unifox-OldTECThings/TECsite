@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Net.Http;
 using TECsite.Data;
+using TECsite.Models;
 using UniEncryption;
 
 namespace TECsite.Pages.Accounts
@@ -10,7 +11,7 @@ namespace TECsite.Pages.Accounts
     public class registerModel : PageModel
     {
         private static readonly HttpClient client = new HttpClient();
-        public string rResponse = String.Empty;
+        public string rResponse = string.Empty;
 
         private void WaitUntil(DateTime dateTime)
         {
@@ -34,8 +35,7 @@ namespace TECsite.Pages.Accounts
 
         public async Task<ActionResult> OnPostRegister(string uname, string disuname, string email, string psw, string confpsw, bool remember = true)
         {
-            TECsiteData siteData = new();
-            if (siteData.userInfo.ContainsKey(uname))
+            if (Program.siteData.Users.Find(uname) != null)
             {
                 rResponse = "Error: Username already exists!";
                 return null;
@@ -48,58 +48,26 @@ namespace TECsite.Pages.Accounts
             else
             {
                 string encryptedPass = psw.Encrypt();
-                Dictionary<string, string[]>? tempDict = siteData.userInfo;
-                string[] TUI = { disuname, email, encryptedPass, "User", "false" };
-                tempDict.Add(uname, TUI);
-                siteData.userInfo = tempDict;
 
-                var values = new Dictionary<string, Dictionary<string, string[]>>
-                {
-                    { "USERINFO", tempDict }
-                };
+                User newuser = new(uname, disuname, email, encryptedPass, false, "User");
 
-                var json = JsonConvert.SerializeObject(values);
-                var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                try
+                {
+                    Program.siteData.Add<User>(newuser);
+                    Program.siteData.SaveChanges();
 
-                var httpRequestMessage = new HttpRequestMessage
-                {
-                    Method = HttpMethod.Patch,
-                    RequestUri = new Uri("https://api.heroku.com/apps/tec-site/config-vars"),
-                    Headers = {
-                            { "Accept", "application/vnd.heroku+json; version=3" },
-                            { "Authorization", $"Bearer {Environment.GetEnvironmentVariable("HEROKU_API_KEY")}" }
-                        },
-                    Content = content
-                };
-                var nextHlfHr = DateTime.Now;
-                if (nextHlfHr.Minute == 0)
-                {
-                    nextHlfHr.AddMinutes(30);
-                }
-                else
-                {
-                    nextHlfHr.AddMinutes(30 - nextHlfHr.Minute);
-                }
-                rResponse = "Registering... page will reload on next half hour...";
-                await Task.Run(() => WaitUntil(nextHlfHr));
-                var response = await client.SendAsync(httpRequestMessage);
-                var responseContent = response.Content.ReadAsStringAsync();
-                Console.WriteLine(response);
-                Console.WriteLine(responseContent.Result);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
                     rResponse = "Success!";
                     CookieOptions cookieOptions = new();
                     if (remember)
                     {
-                        cookieOptions.Expires = DateTime.MaxValue;
+                        cookieOptions.Expires = DateTime.UtcNow.AddMonths(6);
                     }
                     Response.Cookies.Append("loggedIn", uname, cookieOptions);
                     return RedirectToPage("../Index");
                 }
-                else
+                catch (Exception e)
                 {
-                    rResponse = $"Error: got {response.StatusCode} response code... Please contact us about this so we can check what happened!";
+                    rResponse = e.Message;
                     return null;
                 }
             }

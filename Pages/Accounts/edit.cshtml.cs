@@ -4,16 +4,16 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using TECsite.Data;
 using UniEncryption;
+using TECsite.Models;
 
 namespace TECsite.Pages.Accounts
 {
     public class editModel : PageModel
     {
         private static readonly HttpClient client = new HttpClient();
-        private static readonly TECsiteData siteData = new();
         public string rResponse = String.Empty;
         public string uname = "";
-        public string[]? userData = new string[0];
+        public User? userData;
 
         private void WaitUntil(DateTime dateTime)
         {
@@ -33,21 +33,21 @@ namespace TECsite.Pages.Accounts
         public void OnGet()
         {
             uname = Request.Cookies["loggedIn"];
-            userData = siteData.userInfo[uname];
+            userData = Program.siteData.Users.Find(uname);
             Console.WriteLine($"edit account page for {uname}");
         }
 
         public async Task<ActionResult> OnPostEdit(string? newuname = null, string? newdisuname = null, string? newemail = null, string? psw = null, bool remember = true)
         {
-            TECsiteData siteData = new();
             string encryptedpsw = psw.Encrypt();
             uname = Request.Cookies["loggedIn"];
-            if (siteData.userInfo.ContainsKey(newuname ?? ""))
+            userData = Program.siteData.Users.Find(uname);
+            if (Program.siteData.Users.Find(newuname) != null)
             {
                 rResponse = "Error: Username already exists!";
                 return null;
             }
-            else if (encryptedpsw != siteData.userInfo[uname][2])
+            else if (encryptedpsw != Program.siteData.Users.Find(uname).Password)
             {
                 rResponse = "Error: Incorrect password!";
                 return null;
@@ -59,89 +59,58 @@ namespace TECsite.Pages.Accounts
             }
             else
             {
-                Dictionary<string, string[]>? tempDict = siteData.userInfo;
-                string[] TUI = { siteData.userInfo[uname][0], siteData.userInfo[uname][1], siteData.userInfo[uname][2], "User", "false" };
-                Console.WriteLine(TUI);
-                if (newdisuname != null)
+                try
                 {
-                    TUI[0] = newdisuname;
-                    Console.WriteLine(TUI);
-                }
-                if (newemail != null)
-                {
-                    TUI[1] = newemail;
-                    Console.WriteLine(TUI);
-                }
+                    User changedUser = Program.siteData.Users.Find(uname);
 
-                if (newuname != null)
-                {
-                    tempDict.Add(newuname, TUI);
-                    tempDict.Remove(uname);
-                }
-                else
-                {
-                    tempDict[uname] = TUI;
-                }
-
-                siteData.userInfo = tempDict;
-
-                var values = new Dictionary<string, Dictionary<string, string[]>>
-                {
-                    { "USERINFO", tempDict }
-                };
-
-                var json = JsonConvert.SerializeObject(values);
-                var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-
-                var httpRequestMessage = new HttpRequestMessage
-                {
-                    Method = HttpMethod.Patch,
-                    RequestUri = new Uri("https://api.heroku.com/apps/tec-site/config-vars"),
-                    Headers = {
-                            { "Accept", "application/vnd.heroku+json; version=3" },
-                            { "Authorization", $"Bearer {Environment.GetEnvironmentVariable("HEROKU_API_KEY")}" }
-                        },
-                    Content = content
-                };
-                var nextHlfHr = DateTime.Now;
-                if (nextHlfHr.Minute == 0)
-                {
-                    nextHlfHr.AddMinutes(30);
-                }
-                else
-                {
-                    nextHlfHr.AddMinutes(30 - nextHlfHr.Minute);
-                }
-                rResponse = "Editing... page will reload on next half hour...";
-                await Task.Run(() => WaitUntil(nextHlfHr));
-                var response = await client.SendAsync(httpRequestMessage);
-                var responseContent = response.Content.ReadAsStringAsync();
-                Console.WriteLine(response);
-                Console.WriteLine(responseContent.Result);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    rResponse = "Success!";
-                    CookieOptions cookieOptions = new();
-                    if (remember)
-                    {
-                        cookieOptions.Expires = DateTime.MaxValue;
-                    }
-                    Response.Cookies.Delete("loggedIn");
                     if (newuname != null)
                     {
+                        Program.siteData.Users.Remove(changedUser);
+                        Program.siteData.SaveChanges();
+                        
+                        User newchangedUser = new(newuname, (newdisuname ?? changedUser.DiscordUser), (newemail ?? changedUser.Email), changedUser.Password, changedUser.EmailConfirmed, changedUser.UserRole);
+                        if (newemail != null)
+                        {
+                            newchangedUser.EmailConfirmed = false;
+                            //send email verification
+                        }
+                        Program.siteData.Add<User>(newchangedUser);
+                        Program.siteData.SaveChanges();
+
+                        CookieOptions cookieOptions = new();
+                        if (remember)
+                        {
+                            cookieOptions.Expires = DateTime.UtcNow.AddMonths(6);
+                        }
+
+                        Response.Cookies.Delete("loggedIn");
                         Response.Cookies.Append("loggedIn", newuname, cookieOptions);
                     }
                     else
                     {
-                        Response.Cookies.Append("loggedIn", uname, cookieOptions);
+                        if (newdisuname != null)
+                        {
+                            changedUser.DiscordUser = newdisuname;
+                        }
+                        if (newemail != null)
+                        {
+                            changedUser.Email = newemail;
+                            changedUser.EmailConfirmed = false;
+                            //send email verification
+                        }
+
+                        Program.siteData.Update<User>(changedUser);
+                        Program.siteData.SaveChanges();
                     }
-                    Response.Cookies.Append("loggedIn", uname, cookieOptions);
+
+                    rResponse = "Success!";
+
                     Console.WriteLine("Edited Account");
                     return RedirectToPage("../Index");
                 }
-                else
+                catch (Exception e)
                 {
-                    rResponse = $"Error: got {response.StatusCode} response code... Please contact us about this so we can check what happened!";
+                    rResponse = e.Message;
                     return null;
                 }
             }

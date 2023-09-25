@@ -9,7 +9,7 @@ namespace TECsite.Pages.Accounts
     public class ForgotPasswordModel : PageModel
     {
         private static readonly HttpClient client = new HttpClient();
-        public string rResponse = String.Empty;
+        public string rResponse = string.Empty;
 
         public void OnGet()
         {
@@ -18,18 +18,17 @@ namespace TECsite.Pages.Accounts
 
         public async Task<ActionResult> OnPostSendreset(string uname, string disuname, string email)
         {
-            TECsiteData siteData = new();
-            if (!siteData.userInfo.ContainsKey(uname))
+            if (Program.siteData.Users.Find(uname) == null)
             {
                 rResponse = "Error: Username not found!";
                 return null;
             }
-            else if (!siteData.userInfo[uname].Contains(disuname))
+            else if (Program.siteData.Users.Find(uname).DiscordUser != disuname)
             {
                 rResponse = "Error: Incorrect Discord Username!";
                 return null;
             }
-            else if (!siteData.userInfo[uname].Contains(email))
+            else if (Program.siteData.Users.Find(uname).Email != email)
             {
                 rResponse = "Error: Incorrect Email!";
                 return null;
@@ -50,8 +49,10 @@ namespace TECsite.Pages.Accounts
                 Console.WriteLine("setting email and message");
 
                 Console.WriteLine("setting to dict");
-                Dictionary<string, string> nameadressdict = new Dictionary<string, string>();
-                nameadressdict.Add(uname, email);
+                Dictionary<string, string> nameadressdict = new Dictionary<string, string>
+                {
+                    { uname, email }
+                };
                 Console.WriteLine("Making Message");
                 var message = new Message("The Energetic Convention", "theenergeticconvention@gmail.com", nameadressdict, "Password Reset Request", "Use the link below to reset your password! \nhttps://tec-site.herokuapp.com/Accounts/ResetPassword", null);
                 Console.WriteLine("Sending Message");

@@ -8,13 +8,13 @@
     <div class="container">
         <h3>Edit Account Details</h3>
         <form asp-page-handler="edit" method="post">
-          <label for="newuname"><b>Current Username: @Model.uname</b></label>
+            <label for="newuname"><b>Current Username: @Model.userData.UserName</b></label>
           <input type="text" id="newuname" placeholder="Enter new Username" name="newuname"/>
 
-          <label for="newdisuname"><b>Current Discord Username: @Model.userData[0]</b></label>
+          <label for="newdisuname"><b>Current Discord Username: @Model.userData.DiscordUser</b></label>
           <input type="text" id="newdisuname" placeholder="Enter New Discord Username  Ex. Joe#1234" name="newdisuname"/>
 
-          <label for="newemail"><b>Current Email: @Model.userData[1]</b></label>
+            <label for="newemail"><b>Current Email: @Model.userData.Email</b></label>
           <input type="text" id="newemail" placeholder="Enter New Email" name="newemail" />
           
           <label for="psw"><b>Password</b></label>

@@ -25,6 +25,8 @@ namespace TECsite {
 
     public class Program {
 
+        public static TECsiteData siteData = new TECsiteData();
+
         /// <summary>
         /// main timekeep variable
         /// </summary>
@@ -131,10 +133,10 @@ namespace TECsite {
         /// <param name="myIP">The local IP address to listen on</param>
         /// <param name="root">The root directory of the app</param>
         /// <returns>A configured <see cref="IWebHostBuilder"/></returns>
-        public static IWebHostBuilder CreateHostBuilder(string[] args, string myIP, string root)
+        public static IHostBuilder CreateHostBuilder(string[] args, string myIP, string root)
         {
             //the web host builder to be returned
-            var host = new WebHostBuilder()
+            var host = new HostBuilder()
                 //configure some logging to see whats going on inside, could be commented out later ig
                 .ConfigureLogging((hostingContext, logging) =>
                 {
@@ -143,12 +145,19 @@ namespace TECsite {
                     logging.AddEventLog();
                     logging.SetMinimumLevel(LogLevel.Trace); //write EVERYTHING, im trying to get stuff figured out
                 })
-                .UseKestrel() //Use kestrel to run on ig
-                .UseContentRoot(root) //set the content root
-                .UseUrls("https://" + myIP + ":443", "http://" + myIP + ":80") //set the addresses to listen on from provided IP
-                //.UseIISIntegration() //IDK lol
-                .CaptureStartupErrors(true) //Capture the startup errors if something happens ig
-                .UseStartup<Startup>(); //required ig, use the startup for stuff
+                .ConfigureWebHost(webHostBuilder =>
+                {
+                    webHostBuilder.UseKestrel()
+#if DEBUG
+                    .UseUrls("https://localhost:443", "http://localhost:80") //set the addresses to listen on from provided IP
+#else
+                    .UseUrls("https://" + myIP + ":443", "http://" + myIP + ":80") //set the addresses to listen on from provided IP
+#endif
+                    .CaptureStartupErrors(true) //Capture the startup errors if something happens ig
+                    //.UseIISIntegration() //IDK lol
+                    .UseStartup<Startup>(); //required ig, use the startup for stuff
+                })
+                .UseContentRoot(root); //set the content root
 
             //and return the host builder
             return host;
@@ -186,7 +195,7 @@ namespace TECsite {
             }
 
             //in case we need to check email service is working
-            
+            /*
             EmailSender _emailSender = new EmailSender();
             Console.WriteLine("sending startup email for test");
             Dictionary<string, string> nameadressdict = new Dictionary<string, string>();
@@ -194,8 +203,37 @@ namespace TECsite {
             var message = new Message("The Energetic Convention", "theenergeticconvention@gmail.com", nameadressdict, "Startup", "<html><style>a {color: rgb(255, 210, 8)} a:hover {color: rgb(220, 180, 0)} body {margin-bottom: 30px; background-repeat: no-repeat; background-size: cover; background-position-y: 25 %;background-color: rgba(33, 37, 41, 1); opacity: 1; width: 99 %; height: 90 %;} p {color: rgb(255, 255, 255)}</style><body>test text <a href='https://discord.gg/Rte9sbK76D'>test link</a></body><html>", null);
             _emailSender.SendEmail(message);
             Console.WriteLine("email sent");
-            
+            */
 
+#if DEBUG
+            //try to run the site, do not await to allow code to continue running
+            try
+            {
+                app.RunAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex); //catch any exceptions that happen possibly
+            }
+
+            int waitime = 0;
+            //and finally keep the current time updated every half second
+            while (true)
+            {
+                mainNow = DateTime.Now;
+                Console.WriteLine(mainNow.ToString());
+                if (waitime < 6) //wait 3 seconds before checking the time, to make sure it doesnt shut down upon startup
+                {
+                    waitime++;
+                }
+                else if (mainNow.ToLongTimeString() == "12:00:00 AM") //restart the site every midnight. use windows task scheduler to start a new instance while this on shuts down
+                {
+                    Console.WriteLine("shutoff");//Environment.Exit(0);
+                }
+                Thread.Sleep(500);
+            }
+
+#else
             //grab the routers IP and the last known router IP for later
             string strRIP = await new HttpClient().GetStringAsync("https://ipinfo.io/ip");
             Debug.WriteLine("Router IP:" + strRIP);
@@ -238,10 +276,6 @@ namespace TECsite {
             //try to run the site, do not await to allow code to continue running
             try
             {
-                foreach (var obj in app.ServerFeatures.ToArray())
-                {
-                    Debug.WriteLine(obj);
-                }
                 app.RunAsync();
             }
             catch (Exception ex)
@@ -265,6 +299,7 @@ namespace TECsite {
                 }
                 Thread.Sleep(500);
             }
+#endif
         }
 
     }

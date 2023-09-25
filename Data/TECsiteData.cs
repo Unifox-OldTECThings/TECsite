@@ -1,22 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.EntityFrameworkCore;
+using TECsite.Models;
+using NETCore.Encrypt.Internal;
+using UniDatabase;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace TECsite.Data
 {
-    public class TECsiteData
+    public class TECsiteData : DbContext
     {
-        public Dictionary<string, string[]>? userInfo;
+        public DbSet<User> Users { get; set; }
+        public DbSet<EventsInfo> EventsInfo { get; set; }
 
-        public TECsiteData()
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string? userInfoStr = Environment.GetEnvironmentVariable("USERINFO");
-            
-            if (userInfoStr != null)
-            {
-                userInfoStr = userInfoStr.Replace("\"=>[", "\":[");
-                userInfo = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(userInfoStr);
-                 
-            }
+            // connect to sqlite database
+            optionsBuilder.UseSqlite("Data Source=.\\Data\\TECData.db");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<EventsInfo>()
+                .Property(p => p.UserPings)
+                .HasConversion(v => JsonConvert.SerializeObject(v),
+                               v => JsonConvert.DeserializeObject<string[]>(v));
         }
     }
 }

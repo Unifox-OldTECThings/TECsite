@@ -17,14 +17,13 @@ namespace TECsite.Pages.Accounts
 
         public ActionResult OnPostLogin(string uname, string psw, bool remember = true)
         {
-            TECsiteData siteData = new();
             string encryptedpsw = psw.Encrypt();
-            if (!siteData.userInfo.ContainsKey(uname))
+            if (Program.siteData.Users.Find(uname) == null)
             {
                 rResponse = "Error: Username not found!";
                 return null;
             }
-            else if (!siteData.userInfo[uname].Contains(encryptedpsw))
+            else if (Program.siteData.Users.Find(uname).Password != encryptedpsw)
             {
                 rResponse = "Error: Incorrect Password!";
                 return null;
@@ -35,7 +34,7 @@ namespace TECsite.Pages.Accounts
                 CookieOptions cookieOptions = new();
                 if (remember)
                 {
-                    cookieOptions.Expires = DateTime.MaxValue;
+                    cookieOptions.Expires = DateTime.UtcNow.AddMonths(6);
                 }
                 Response.Cookies.Append("loggedIn", uname, cookieOptions);
                 Console.WriteLine($"logged in {uname}");

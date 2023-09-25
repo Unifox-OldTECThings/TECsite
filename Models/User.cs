@@ -15,8 +15,19 @@ using TECsite.Models;
 
 namespace TECsite.Models
 {
+    [PrimaryKey("UserName")]
     public class User
     {
+        public User(string userName, string discordUser, string email, string password, bool emailConfirmed = false, string userRole = "User") 
+        {
+            UserName = userName;
+            DiscordUser = discordUser;
+            Email = email;
+            Password = password;
+            EmailConfirmed = emailConfirmed;
+            UserRole = userRole;
+        }
+
         public string UserName { get; set; }
         public string DiscordUser { get; set; }
         public string Email { get; set; }
