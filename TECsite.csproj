@@ -84,6 +84,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update=".env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="UniEncryption.dll">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
