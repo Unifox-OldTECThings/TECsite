@@ -2,131 +2,131 @@
 @model CurrentEventModel
 @{
     ViewData["Title"] = "Current Event page";
-    string nextEvent = Program.reformatDate(Program.Event1Time);
+    string nextEvent = Program.reformatDate(Program.EventTime[1]);
 }
 
 <div class="text-center">
     <h1 class="display-4">The Current Event</h1>
-    @if (Program.mainNow < Program.GetEventTime(Program.Event1Time).Subtract(Program.fiveMin)){ 
-        nextEvent = Program.reformatDate(Program.Event1Time);
+    @if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]).Subtract(Program.fiveMin)){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="before">The convention has not started yet... check back here when it has!</p>
-    }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event2Time) && Program.mainNow > Program.GetEventTime(Program.Event1Time)){ 
-        nextEvent = Program.reformatDate(Program.Event2Time);
+    }<!--
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="1">QA 4pm - 5pm: <a asp-area="" asp-page="/Events/Event1"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Opening of the convention!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event3Time) && Program.mainNow > Program.GetEventTime(Program.Event2Time)){ 
-        nextEvent = Program.reformatDate(Program.Event3Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="2">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event4Time) && Program.mainNow > Program.GetEventTime(Program.Event3Time)){ 
-        nextEvent = Program.reformatDate(Program.Event4Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="3">   6pm - 7pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Day1EndTime) && Program.mainNow > Program.GetEventTime(Program.Event4Time)){ 
-        nextEvent = Program.reformatDate(Program.Event5Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="4">NQ 7pm - 8pm: <a asp-area="" asp-page="/Events/Event3"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Furry Games!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event5Time) && Program.mainNow > Program.GetEventTime(Program.Day1EndTime)){ 
-        nextEvent = Program.reformatDate(Program.Event5Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="1end">Day 1 is now over</p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event6Time) && Program.mainNow > Program.GetEventTime(Program.Event5Time)){ 
-        nextEvent = Program.reformatDate(Program.Event6Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="5">   8am - 9am: <a asp-area="" asp-page="/Events/Event4"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Minecraft mini games! In minecraft *</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event7Time) && Program.mainNow > Program.GetEventTime(Program.Event6Time)){ 
-        nextEvent = Program.reformatDate(Program.Event7Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="6">NQ 9am - 11am: <a asp-area="" asp-page="/Events/Event5"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tycoon Fun!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event8Time) && Program.mainNow > Program.GetEventTime(Program.Event7Time)){ 
-        nextEvent = Program.reformatDate(Program.Event8Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="7">QA 11am - 12pm: <a asp-area="" asp-page="/Events/Event6"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tag!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event9Time) && Program.mainNow > Program.GetEventTime(Program.Event8Time)){ 
-        nextEvent = Program.reformatDate(Program.Event9Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="8">   12pm - 12:30pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event10Time) && Program.mainNow > Program.GetEventTime(Program.Event9Time)){ 
-        nextEvent = Program.reformatDate(Program.Event10Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="9">   12:30pm - 1pm: <a asp-area="" asp-page="/Events/Event14"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Fursuit Meet & Greet! *</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event11Time) && Program.mainNow > Program.GetEventTime(Program.Event10Time)){ 
-        nextEvent = Program.reformatDate(Program.Event11Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="10">NQ 1pm - 2pm: <a asp-area="" asp-page="/Events/Event7"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Minesweeper!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event12Time) && Program.mainNow > Program.GetEventTime(Program.Event11Time)){ 
-        nextEvent = Program.reformatDate(Program.Event12Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="11">QA 2pm - 3pm: <a asp-area="" asp-page="/Events/Event8"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Among Us!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event13Time) && Program.mainNow > Program.GetEventTime(Program.Event12Time)){ 
-        nextEvent = Program.reformatDate(Program.Event13Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="12">QA 3pm - 4pm: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event14Time) && Program.mainNow > Program.GetEventTime(Program.Event13Time)){ 
-        nextEvent = Program.reformatDate(Program.Event14Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="13">   4pm - 5pm: <a asp-area="" asp-page="/Events/Event9"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Beat Saber Battles! In Beat Saber *</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event15Time) && Program.mainNow > Program.GetEventTime(Program.Event14Time)){ 
-        nextEvent = Program.reformatDate(Program.Event15Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="14">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event17"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Bowling</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event16Time) && Program.mainNow > Program.GetEventTime(Program.Event15Time)){ 
-        nextEvent = Program.reformatDate(Program.Event16Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="15">   6pm - 7pm: <a asp-area="" asp-page="/Events/Event15"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Jackbox Games! *</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event17Time) && Program.mainNow > Program.GetEventTime(Program.Event16Time)){ 
-        nextEvent = Program.reformatDate(Program.Event17Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="16">QA 7pm - 8pm: <a asp-area="" asp-page="/Events/Event11"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Flight and Fight!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Day2EndTime) && Program.mainNow > Program.GetEventTime(Program.Event17Time)){ 
-        nextEvent = Program.reformatDate(Program.Event18Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="17">   8pm - 9pm: <a asp-area="" asp-page="/Events/Event16"><button class="link-button-class" id="link-button" onclick="ButtonWait()">DJ stream! * <b>CANCELLED</b></button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event18Time) && Program.mainNow > Program.GetEventTime(Program.Day2EndTime)){ 
-        nextEvent = Program.reformatDate(Program.Event18Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="1end">Day 2 is now over</p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event19Time) && Program.mainNow > Program.GetEventTime(Program.Event18Time)){ 
-        nextEvent = Program.reformatDate(Program.Event19Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="18">   8am - 9am: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event20Time) && Program.mainNow > Program.GetEventTime(Program.Event19Time)){ 
-        nextEvent = Program.reformatDate(Program.Event20Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="19">QA 9am - 10am: <a asp-area="" asp-page="/Events/Event2"><button class="link-button-class" id="link-button" onclick="ButtonWait()">VRC Prop Hunt!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event21Time) && Program.mainNow > Program.GetEventTime(Program.Event20Time)){ 
-        nextEvent = Program.reformatDate(Program.Event21Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="20">QA 10am - 11am: <a asp-area="" asp-page="/Events/Event6"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tag!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event22Time) && Program.mainNow > Program.GetEventTime(Program.Event21Time)){ 
-        nextEvent = Program.reformatDate(Program.Event22Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="21">QA 11am - 12pm: <a asp-area="" asp-page="/Events/Event10"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Cards Against Humanity!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event23Time) && Program.mainNow > Program.GetEventTime(Program.Event22Time)){ 
-        nextEvent = Program.reformatDate(Program.Event23Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="22">   12pm - 1pm: <a asp-area="" asp-page="/Events/openEvent"><button class="link-button-class" id="link-button" onclick="ButtonWait()">open time slot</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event24Time) && Program.mainNow > Program.GetEventTime(Program.Event23Time)){ 
-        nextEvent = Program.reformatDate(Program.Event24Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="23">NQ 1pm - 3pm: <a asp-area="" asp-page="/Events/Event5"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Udon Tycoon Fun!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event25Time) && Program.mainNow > Program.GetEventTime(Program.Event24Time)){ 
-        nextEvent = Program.reformatDate(Program.Event25Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="24">QA 3pm - 4pm: <a asp-area="" asp-page="/Events/Event12"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Putt Putt Quest!</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.Event26Time) && Program.mainNow > Program.GetEventTime(Program.Event25Time)){ 
-        nextEvent = Program.reformatDate(Program.Event26Time);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="25">   4pm - 5pm: <a asp-area="" asp-page="/Events/Event9"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Beat Saber Battles! In Beat Saber *</button></a></p>
     }
-    else if (Program.mainNow < Program.GetEventTime(Program.ConEndTime) && Program.mainNow > Program.GetEventTime(Program.Event26Time)){ 
-        nextEvent = Program.reformatDate(Program.ConEndTime);
+    else if (Program.mainNow < Program.GetEventTime(Program.EventTime[1]) && Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="26">QA 5pm - 6pm: <a asp-area="" asp-page="/Events/Event13"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Closing of the Convention.</button></a></p>
     }
-    else if (Program.mainNow > Program.GetEventTime(Program.ConEndTime)){ 
-        nextEvent = Program.reformatDate(Program.Event1Time);
+    else if (Program.mainNow > Program.GetEventTime(Program.EventTime[1])){ 
+        nextEvent = Program.reformatDate(Program.EventTime[1]);
     <p id="over">The convention is now closed, thank you for coming! </p>
-    }
+    }-->
 
     <p id="timetonext">Time until next event: </p>
 </div>
