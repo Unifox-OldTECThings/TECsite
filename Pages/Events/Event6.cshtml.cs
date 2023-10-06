@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Udon Tag Event page accessed");
+            Console.WriteLine("Event 6 access");
         }
     }
 }

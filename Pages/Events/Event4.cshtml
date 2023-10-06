@@ -1,13 +1,11 @@
 ﻿@page
 @model Event4Model
 @{
-    ViewData["Title"] = "Minecraft mini games Event page";
+    ViewData["Title"] = "open time slot";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Minecraft mini games!</h1>
-    <a href="https://realms.gg/jzXUPf9hBBQ" ><button class="link-button-class" id="link-button" onclick="ButtonWait()">Join now!</button></a>
-    <p>To join this event, you need to have minecraft, as this event is held in a minecraft realm.</p>
-    <p>Welcome to Minecraft mini games! This is an attendee hosted event by Flare in the discord! Due to the limited size of minecraft realms, there may be very limited attendance. Flare will be streaming the event in the discord server in case the realm fills up.</p>
-    <p>This event is held in a Minecraft realm. Have fun!</p>
+    <h1 class="display-4">open time slot</h1>
+    <a asp-area="" asp-page="/Events/joining"><button class="link-button-class" id="link-button" onclick="ButtonWait()">How to join an event.</button></a>
+    <p>This is an open time slot! As long as this time slot hasnt passed, you could host an event here! Whether in VRChat or another game, just head <a asp-area="" asp-page="/Events/hosting">here</a> to see how to host! We are always looking for someone to host an event in an open slot, so feel free to grab one while they're still available!</p>
 </div>

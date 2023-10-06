@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("VRC Bowling Event page accessed");
+            Console.WriteLine("Event 17 access");
         }
     }
 }

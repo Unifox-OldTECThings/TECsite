@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Furry Games Event page accessed");
+            Console.WriteLine("Event 3 access");
         }
     }
 }

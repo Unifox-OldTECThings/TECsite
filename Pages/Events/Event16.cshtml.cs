@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("DJ stream Event page accessed");
+            Console.WriteLine("Event 16 access");
         }
     }
 }

@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Udon Tycoon Fun Event page accessed");
+            Console.WriteLine("Event 5 access");
         }
     }
 }

@@ -24,6 +24,13 @@ using System.Diagnostics;
 namespace TECsite {
 
     public class Program {
+        public class KeyValueList<TKey, TValue> : List<KeyValuePair<TKey, TValue>>
+        {
+            public void Add(TKey key, TValue value)
+            {
+                Add(new KeyValuePair<TKey, TValue>(key, value));
+            }
+        }
 
         public static TECsiteData siteData = new TECsiteData();
 
@@ -60,35 +67,46 @@ namespace TECsite {
 
         //TODO: maybe put this into an SQL database table so its not annoyingly here
         //hardcoded event times
-        public static string Event1Time = "31/03/2023 04:00:00 PM";
-        public static string Event2Time = "31/03/2023 05:00:00 PM";
-        public static string Event3Time = "31/03/2023 06:00:00 PM";
-        public static string Event4Time = "31/03/2023 07:00:00 PM";
-        public static string Day1EndTime = "31/03/2023 08:00:00 PM";
-        public static string Event5Time = "01/04/2023 08:00:00 AM";
-        public static string Event6Time = "01/04/2023 09:00:00 AM";
-        public static string Event7Time = "01/04/2023 11:00:00 AM";
-        public static string Event8Time = "01/04/2023 12:00:00 PM";
-        public static string Event9Time = "01/04/2023 12:30:00 PM";
-        public static string Event10Time = "01/04/2023 01:00:00 PM";
-        public static string Event11Time = "01/04/2023 02:00:00 PM";
-        public static string Event12Time = "01/04/2023 03:00:00 PM";
-        public static string Event13Time = "01/04/2023 04:00:00 PM";
-        public static string Event14Time = "01/04/2023 05:00:00 PM";
-        public static string Event15Time = "01/04/2023 06:00:00 PM";
-        public static string Event16Time = "01/04/2023 07:00:00 PM";
-        public static string Event17Time = "01/04/2023 08:00:00 PM";
-        public static string Day2EndTime = "01/04/2023 09:00:00 PM";
-        public static string Event18Time = "02/04/2023 08:00:00 AM";
-        public static string Event19Time = "02/04/2023 09:00:00 AM";
-        public static string Event20Time = "02/04/2023 10:00:00 AM";
-        public static string Event21Time = "02/04/2023 11:00:00 AM";
-        public static string Event22Time = "02/04/2023 12:00:00 PM";
-        public static string Event23Time = "02/04/2023 01:00:00 PM";
-        public static string Event24Time = "02/04/2023 03:00:00 PM";
-        public static string Event25Time = "02/04/2023 04:00:00 PM";
-        public static string Event26Time = "02/04/2023 05:00:00 PM";
-        public static string ConEndTime = "02/04/2023 06:00:00 PM";
+        static KeyValueList<int, string> eventTime = new KeyValueList<int, string> {
+            { 1, "06/10/2023 03:00:00 PM" }, //day one: event num
+            { 2, "06/10/2023 04:00:00 PM" },
+            { 3, "06/10/2023 05:00:00 PM" },
+            { 4, "06/10/2023 06:00:00 PM" },
+            { 5, "06/10/2023 07:00:00 PM" },
+            { 6, "06/10/2023 08:00:00 PM" },
+            { 7, "06/10/2023 09:00:00 PM" }, //end day 1
+
+            { 8, "07/10/2023 08:00:00 AM" }, //day two: event mun + 1
+            { 9, "07/10/2023 09:00:00 AM" },
+            { 10, "07/10/2023 10:00:00 AM" },
+            { 11, "07/10/2023 11:00:00 AM" },
+            { 12, "07/10/2023 12:00:00 PM" },
+            { 13, "07/10/2023 12:30:00 PM" },
+            { 14, "07/10/2023 01:00:00 PM" },
+            { 15, "07/10/2023 02:00:00 PM" },
+            { 16, "07/10/2023 03:00:00 PM" },
+            { 17, "07/10/2023 04:00:00 PM" },
+            { 18, "07/10/2023 05:00:00 PM" },
+            { 19, "07/10/2023 06:00:00 PM" },
+            { 20, "07/10/2023 07:00:00 PM" },
+            { 21, "07/10/2023 08:00:00 PM" },
+            { 22, "07/10/2023 09:00:00 PM" }, //end day 2
+
+            { 23, "08/10/2023 08:00:00 AM" }, //day three: event num + 2
+            { 24, "08/10/2023 09:00:00 AM" }, 
+            { 25, "08/10/2023 10:00:00 AM" },
+            { 26, "08/10/2023 11:00:00 AM" },
+            { 27, "08/10/2023 12:00:00 PM" },
+            { 28, "08/10/2023 01:00:00 PM" },
+            { 29, "08/10/2023 02:00:00 PM" },
+            { 30, "08/10/2023 03:00:00 PM" },
+            { 31, "08/10/2023 04:00:00 PM" },
+            { 32, "08/10/2023 05:00:00 PM" },
+            { 34, "08/10/2023 06:00:00 PM" }  //end day 3
+        };
+    
+
+        public static Dictionary<int, string> EventTime = new Dictionary<int, string>(eventTime);
 
         /// <summary>
         /// Used to update the dns server with the correct ip address

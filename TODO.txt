@@ -1,0 +1,16 @@
+﻿events rewrite - working on
+use vrc apis to keep track of how many people are in an instance
+auto manage instances
+Database stuff
+make events pages dynamic from database
+account system
+merch store on site
+
+vrc world link:
+https://vrchat.com/home/launch?worldId=[WORLDID]&instanceId=TEC1~group(grp_68436afe-3d3a-4455-b88c-c8fa6924e4e0)~groupAccessType(members)~region(us)
+
+details format:
+event intro and description
+world used and invitation to join
+
+overriden events:

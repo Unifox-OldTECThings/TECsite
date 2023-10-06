@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Cards Against Humanity Event page accessed");
+            Console.WriteLine("Event 10 access");
         }
     }
 }

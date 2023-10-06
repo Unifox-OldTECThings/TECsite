@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Minecraft mini games Event page accessed");
+            Console.WriteLine("Event 4 access");
         }
     }
 }

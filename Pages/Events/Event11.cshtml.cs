@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Karaoke Night Event page accessed");
+            Console.WriteLine("Event 11 access");
         }
     }
 }

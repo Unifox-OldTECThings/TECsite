@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Prop Hunt Event page accessed");
+            Console.WriteLine("Event 2 access");
         }
     }
 }

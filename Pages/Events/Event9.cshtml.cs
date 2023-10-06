@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Beat Saber Battles Event page accessed");
+            Console.WriteLine("Event 9 access");
         }
     }
 }

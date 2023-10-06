@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Closing Event page accessed");
+            Console.WriteLine("Event 13 access");
         }
     }
 }

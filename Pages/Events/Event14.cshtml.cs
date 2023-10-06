@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Fursuit Meet & Greet Event page accessed");
+            Console.WriteLine("Event 14 access");
         }
     }
 }

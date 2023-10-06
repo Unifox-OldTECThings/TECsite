@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Minesweeper Event page accessed");
+            Console.WriteLine("Event 7 access");
         }
     }
 }

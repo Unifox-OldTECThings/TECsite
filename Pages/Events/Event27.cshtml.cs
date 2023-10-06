@@ -5,18 +5,18 @@ using System;
 
 namespace TECsite.Pages
 {
-    public class Event15Model : PageModel
+    public class Event27Model : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
 
-        public Event15Model(ILogger<IndexModel> logger)
+        public Event27Model(ILogger<IndexModel> logger)
         {
             _logger = logger;
         }
 
         public void OnGet()
         {
-            Console.WriteLine("Event 15 access");
+            Console.WriteLine("Event 27 access");
         }
     }
 }

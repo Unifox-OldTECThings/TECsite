@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Among Us Event page accessed");
+            Console.WriteLine("Event 8 access");
         }
     }
 }

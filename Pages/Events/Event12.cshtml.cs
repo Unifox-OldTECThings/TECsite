@@ -16,7 +16,7 @@ namespace TECsite.Pages
 
         public void OnGet()
         {
-            Console.WriteLine("Putt Putt Quest Event page accessed");
+            Console.WriteLine("Event 12 access");
         }
     }
 }
