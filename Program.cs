@@ -1,36 +1,14 @@
 //usings
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using TECsite.Data;
-using TECsite.EmailService;
-using TECsite.Models;
-using AutoMapper;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Newtonsoft.Json;
-using UniEncryption;
-using System.Diagnostics;
 
-namespace TECsite {
-
+namespace TECsite
+{
     public class Program {
-        public class KeyValueList<TKey, TValue> : List<KeyValuePair<TKey, TValue>>
-        {
-            public void Add(TKey key, TValue value)
-            {
-                Add(new KeyValuePair<TKey, TValue>(key, value));
-            }
-        }
 
         public static TECsiteData siteData = new TECsiteData();
 
@@ -46,67 +24,54 @@ namespace TECsite {
         /// </summary>
         /// <param name="eventdate">The date and time as: dd/MM/yyyy hh:mm:ss tt</param>
         /// <returns>The parsed DateTime</returns>
-        public static DateTime GetEventTime(string eventdate)
-        {
-            return DateTime.ParseExact(eventdate, "dd/MM/yyyy hh:mm:ss tt", null);
-        }
+        public static DateTime GetEventTime(long eventdate) { return DateTime.FromBinary(eventdate); }
 
         /// <summary>
         /// Used to reformat from yyyy/mm/dd to dd/mm/yyyy
         /// </summary>
         /// <param name="date">The date to be reformatted</param>
         /// <returns>The reformatted date</returns>
-        public static string reformatDate(string date)
-        {
-            char[] splitdel = { ' ', '/' };
-            string[] splitdate = date.Split(splitdel);
-            string finaldate = splitdate[2] + "/" + splitdate[1] + "/" + splitdate[0] + " " + splitdate[3] + " " + splitdate[4];
-            Console.WriteLine(finaldate);
-            return finaldate;
-        }
+        public static string reformatDate(long date) { return DateTime.FromBinary(date).ToString("yyyy/MM/dd hh:mm:ss tt"); }
 
         //TODO: maybe put this into an SQL database table so its not annoyingly here
-        //hardcoded event times
-        static KeyValueList<int, string> eventTime = new KeyValueList<int, string> {
-            { 1, "06/10/2023 03:00:00 PM" }, //day one: event num
-            { 2, "06/10/2023 04:00:00 PM" },
-            { 3, "06/10/2023 05:00:00 PM" },
-            { 4, "06/10/2023 06:00:00 PM" },
-            { 5, "06/10/2023 07:00:00 PM" },
-            { 6, "06/10/2023 08:00:00 PM" },
-            { 7, "06/10/2023 09:00:00 PM" }, //end day 1
-
-            { 8, "07/10/2023 08:00:00 AM" }, //day two: event mun + 1
-            { 9, "07/10/2023 09:00:00 AM" },
-            { 10, "07/10/2023 10:00:00 AM" },
-            { 11, "07/10/2023 11:00:00 AM" },
-            { 12, "07/10/2023 12:00:00 PM" },
-            { 13, "07/10/2023 12:30:00 PM" },
-            { 14, "07/10/2023 01:00:00 PM" },
-            { 15, "07/10/2023 02:00:00 PM" },
-            { 16, "07/10/2023 03:00:00 PM" },
-            { 17, "07/10/2023 04:00:00 PM" },
-            { 18, "07/10/2023 05:00:00 PM" },
-            { 19, "07/10/2023 06:00:00 PM" },
-            { 20, "07/10/2023 07:00:00 PM" },
-            { 21, "07/10/2023 08:00:00 PM" },
-            { 22, "07/10/2023 09:00:00 PM" }, //end day 2
-
-            { 23, "08/10/2023 08:00:00 AM" }, //day three: event num + 2
-            { 24, "08/10/2023 09:00:00 AM" }, 
-            { 25, "08/10/2023 10:00:00 AM" },
-            { 26, "08/10/2023 11:00:00 AM" },
-            { 27, "08/10/2023 12:00:00 PM" },
-            { 28, "08/10/2023 01:00:00 PM" },
-            { 29, "08/10/2023 02:00:00 PM" },
-            { 30, "08/10/2023 03:00:00 PM" },
-            { 31, "08/10/2023 04:00:00 PM" },
-            { 32, "08/10/2023 05:00:00 PM" },
-            { 34, "08/10/2023 06:00:00 PM" }  //end day 3
-        };
-    
-
-        public static Dictionary<int, string> EventTime = new Dictionary<int, string>(eventTime);
+        //hardcoded event times, E is Events start time, D is Day end time
+        public enum Times : long
+        {
+            E1 = 638485308000000000,
+            E2 = 638485344000000000,
+            E3 = 638485380000000000,
+            E4 = 638485416000000000,
+            E5 = 638485452000000000,
+            E6 = 638485488000000000,
+            D1 = 638485524000000000,
+            E7 = 638485956000000000,
+            E8 = 638485992000000000,
+            E9 = 638486028000000000,
+            E10 = 638486064000000000,
+            E11 = 638486082000000000,
+            E12 = 638486100000000000,
+            E13 = 638486136000000000,
+            E14 = 638486172000000000,
+            E15 = 638486208000000000,
+            E16 = 638486244000000000,
+            E17 = 638486280000000000,
+            E18 = 638486316000000000,
+            E19 = 638486352000000000,
+            D2 = 638486388000000000,
+            E20 = 638485956000000000,
+            E21 = 638486856000000000,
+            E22 = 638486892000000000,
+            E23 = 638486928000000000,
+            E24 = 638486964000000000,
+            E25 = 638487000000000000,
+            E26 = 638487036000000000,
+            E27 = 638487072000000000,
+            E28 = 638487108000000000,
+            E29 = 638487144000000000,
+            E30 = 638487180000000000,
+            E31 = 638487216000000000,
+            D3 = 638487252000000000
+        }
 
         /// <summary>
         /// Used to update the dns server with the correct ip address

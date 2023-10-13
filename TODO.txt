@@ -1,5 +1,4 @@
-﻿events rewrite - working on
-use vrc apis to keep track of how many people are in an instance
+﻿use vrc apis to keep track of how many people are in an instance
 auto manage instances
 Database stuff
 make events pages dynamic from database

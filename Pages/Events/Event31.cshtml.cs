@@ -5,18 +5,18 @@ using System;
 
 namespace TECsite.Pages
 {
-    public class openEventModel : PageModel
+    public class Event31Model : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
 
-        public openEventModel(ILogger<IndexModel> logger)
+        public Event31Model(ILogger<IndexModel> logger)
         {
             _logger = logger;
         }
 
         public void OnGet()
         {
-            Console.WriteLine("open time slot page accessed");
+            Console.WriteLine("Event 31 accessed");
         }
     }
 }
