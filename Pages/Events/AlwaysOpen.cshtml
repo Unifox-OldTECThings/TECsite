@@ -6,8 +6,47 @@
 
 <div class="text-center">
     <h1 class="display-4">Convention open instance</h1>
-    <a href="https://vrchat.com/home/launch?worldId=wrld_b155ff30-0bbf-486c-afc5-e7a05145387b&instanceId=TECOPEN~group(grp_68436afe-3d3a-4455-b88c-c8fa6924e4e0)~groupAccessType(members)~region(us)"><button class="link-button-class" id="link-button" onclick="ButtonWait()">Join now!</button></a>
+    <div layout id="buttonContainer" vertical></div>
     <a asp-area="" asp-page="/Events/joining"><button class="link-button-class" id="link-button" onclick="ButtonWait()">How to join an event.</button></a>
     <p>This VRChat world instance of the VirtualFurence world will remain open for the duration of the convention. You can come hang out while you wait between events you can and want to attend, or just any time!</p>
     <p>This is in the VirtualFurence world in VRChat.</p>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    const worldID = "wrld_b155ff30-0bbf-486c-afc5-e7a05145387b"
+    const instanceCount = 3;
+
+    function Update() {
+        //call vrc api to manage instances
+        for (let i = 1; i <= instanceCount; i++) {
+            const url = instanceUrlPart1 + worldID + instanceUrlPart2 + `${i}` + instanceUrlPart3;
+            $.ajax({
+                url: apiUrl + worldID + `:TEC${i}`,
+                type: "GET", 
+                crossDomain: true,
+                headers: {
+                    Authorization: "Basic JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
+                },
+                success: function(result){
+                    console.log(result)
+                },
+                error: function(error){
+                    console.log(`Error: ${error}`)
+                }
+            })
+        }
+    }
+
+    function OnLoad(){
+        const buttonContainer = document.getElementById("buttonContainer");
+        var buttons = "";
+        for (let i = 1; i <= instanceCount; i++) {
+            buttons += buttonContainer.innerHTML = `<div><a id="link${i}" href="${instanceUrlPart1}${worldID}${instanceUrlPart2}${i}${instanceUrlPart3}"><button id="btn${i}" class="link-button-class" id="link-button" onclick="ButtonWait()">Join Instance ${i} now! [number] in instance!</button></a></div>`;
+        }
+        buttonContainer.innerHTML = buttons;
+            setInterval(Update, 500);
+    }
+
+    $(window).on("load", OnLoad );
+</script>
