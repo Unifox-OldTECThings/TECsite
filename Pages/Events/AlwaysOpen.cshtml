@@ -25,9 +25,7 @@
                 url: apiUrl + worldID + `:TEC${i}`,
                 type: "GET", 
                 crossDomain: true,
-                headers: {
-                    Authorization: "Basic JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
-                },
+                xhrFields: { withCredentials: true },
                 success: function(result){
                     console.log(result)
                 },
@@ -45,7 +43,22 @@
             buttons += buttonContainer.innerHTML = `<div><a id="link${i}" href="${instanceUrlPart1}${worldID}${instanceUrlPart2}${i}${instanceUrlPart3}"><button id="btn${i}" class="link-button-class" id="link-button" onclick="ButtonWait()">Join Instance ${i} now! [number] in instance!</button></a></div>`;
         }
         buttonContainer.innerHTML = buttons;
-            setInterval(Update, 500);
+        $.ajax({
+            url: "https://api.vrchat.cloud/api/1/auth/user",
+            type: "GET",
+            crossDomain: true,
+            headers: {
+                Authorization: "Basic " + btoa("uname:password")
+            },
+            success: function (result) {
+                console.log(result)
+            },
+            error: function (error) {
+                console.log(`Error: ${error}`)
+            }
+        })
+
+        setInterval(Update, 500);
     }
 
     $(window).on("load", OnLoad );
